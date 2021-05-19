@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "vaultaff638bd": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
