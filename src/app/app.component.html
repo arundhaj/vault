@@ -1,3 +1,5 @@
+<amplify-authenticator *ngIf="authState !== 'signedin'"></amplify-authenticator>
+
 <div fxLayout="column" class="container">
   <mat-toolbar color="primary" class="toolbar" fxLayout="row" fxLayoutAlign="space-between center" fxFlex="64px">
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
@@ -5,8 +7,8 @@
       <span> Vault</span>
     </div>
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
-      <!-- <span style="font-size: 1rem;">user.username</span> -->
-      <!-- <amplify-sign-out></amplify-sign-out> -->
+      <span style="font-size: 1rem;">{{ user?.username }}</span>
+      <amplify-sign-out></amplify-sign-out>
     </div>
   </mat-toolbar>
   <div fxFlex class="application-container">

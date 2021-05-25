@@ -19,6 +19,17 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AccountsComponent } from './accounts/accounts.component';
 
+import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
+
+// Amplify Configuration
+import Auth from '@aws-amplify/auth';
+import API from '@aws-amplify/api';
+import AWSConfig from 'src/aws-exports';
+
+Auth.configure(AWSConfig);
+API.configure(AWSConfig)
+// End Amplify Configuration
+
 
 @NgModule({
   declarations: [
@@ -40,7 +51,8 @@ import { AccountsComponent } from './accounts/accounts.component';
     ClipboardModule,
     MatButtonToggleModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AmplifyUIAngularModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
