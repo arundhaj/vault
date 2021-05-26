@@ -15,6 +15,7 @@ export class AccountsComponent implements OnInit {
   accounts: any[] = [];
   categories: any[] = [];
   searchQuery = '';
+  hideCategory: any = {};
 
   constructor(public dialog: MatDialog) { }
 

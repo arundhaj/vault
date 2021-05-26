@@ -22,8 +22,11 @@
 <div class="accounts-container">
     <div *ngIf="group.value == 'grid'">
         <div class="category-container" *ngFor="let category of categories">
-            <div>{{ category }}</div>
-            <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <div class="category-header" fxLayout="row" fxLayoutAlign="start center" (click)="hideCategory[category] = !hideCategory[category]">
+                <mat-icon>{{ hideCategory[category] ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</mat-icon>
+                {{ category }}
+            </div>
+            <div *ngIf="hideCategory[category]" fxLayout="row wrap" fxLayoutGap="16px grid">
                 <div fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let account of getAccountsByCategory(category)">
                     <div class="grid-item" fxLayout="column">
                         <h3>{{ account.service }}</h3>
@@ -70,8 +73,11 @@
     </div>
     <div *ngIf="group.value == 'list'">
         <div class="category-container" *ngFor="let category of categories">
-            <div>{{ category }}</div>
-            <mat-list role="list">
+            <div class="category-header" fxLayout="row" fxLayoutAlign="start center" (click)="hideCategory[category] = !hideCategory[category]">
+                <mat-icon>{{ hideCategory[category] ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</mat-icon>
+                {{ category }}
+            </div>
+            <mat-list *ngIf="hideCategory[category]" role="list">
                 <mat-list-item class="list-item" role="listitem" *ngFor="let account of getAccountsByCategory(category)">
                     <h3 mat-line>{{ account.service }}</h3>
                     <img mat-list-icon src="https://logo.clearbit.com/{{ account.url }}" width="64" height="64" alt="">
