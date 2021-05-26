@@ -1,0 +1,39 @@
+.action-bar {
+    padding: 1rem;
+}
+
+.accounts-container {
+    padding: 1rem; 
+
+    .grid-item {
+        border: 1px solid lightgray;
+        border-radius: 3px;
+        padding: 1rem;
+    }
+
+    .list-item {
+        padding: 1rem 0.5rem;
+    }
+
+    .category-container:not(:first-child) {
+        padding-top: 1rem;
+    }
+
+    .mat-list-item:hover {
+        background-color: #f5f5f5;
+    }
+
+    .mat-list-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: unset !important;
+    }
+
+}
+
+.add-button {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 100;
+}

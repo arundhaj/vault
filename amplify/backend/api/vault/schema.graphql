@@ -1,0 +1,9 @@
+type Account @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  service: String!
+  category: String!
+  url: String!
+  username: String!
+  password: String!
+  notes: String!
+}

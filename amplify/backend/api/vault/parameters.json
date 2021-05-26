@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "vault",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authvaultaff638bd",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

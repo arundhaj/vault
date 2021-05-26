@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AccountsComponent } from './accounts/accounts.component';
 
@@ -25,6 +26,7 @@ import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 import Auth from '@aws-amplify/auth';
 import API from '@aws-amplify/api';
 import AWSConfig from 'src/aws-exports';
+import { AccountComponent } from './account/account.component';
 
 Auth.configure(AWSConfig);
 API.configure(AWSConfig)
@@ -34,7 +36,8 @@ API.configure(AWSConfig)
 @NgModule({
   declarations: [
     AppComponent,
-    AccountsComponent
+    AccountsComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ API.configure(AWSConfig)
     ClipboardModule,
     MatButtonToggleModule,
     FormsModule,
+    MatFormFieldModule,
     FlexLayoutModule,
     AmplifyUIAngularModule,
   ],

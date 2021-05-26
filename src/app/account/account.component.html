@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>{{ data.IsAdd ? 'Add' : 'Edit' }} Account</h1>
+<div class="account-container" mat-dialog-content fxLayout="column" fxLayoutAlign="space-between stretch">
+    <div fxLayout="column" fxLayoutAlign="center stretch">
+        <mat-form-field appearance="outline">
+            <mat-label>URL</mat-label>
+            <input matInput [(ngModel)]="account.url">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px">
+        <mat-form-field fxFlex="49%" appearance="outline">
+            <mat-label>Service Name</mat-label>
+            <input matInput required placeholder="Gmail, Amazon, etc." [(ngModel)]="account.service">
+        </mat-form-field>
+        <mat-form-field fxFlex="49%" appearance="outline">
+            <mat-label>Category</mat-label>
+            <input matInput required [(ngModel)]="account.category">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px">
+        <mat-form-field fxFlex="49%" appearance="outline">
+            <mat-label >Username</mat-label>
+            <input matInput required [(ngModel)]="account.username">
+        </mat-form-field>
+        <mat-form-field fxFlex="49%" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" required [(ngModel)]="account.password">
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>            
+        </mat-form-field>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center stretch">
+        <mat-form-field appearance="outline">
+            <mat-label>Notes</mat-label>
+            <textarea matInput rows="5" [(ngModel)]="account.notes"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-stroked-button mat-dialog-close="Cancel">Cancel</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>
+        <mat-icon>{{ data.IsAdd ? 'add' : 'save' }}</mat-icon>
+        {{ data.IsAdd ? 'ADD' : 'SAVE' }}
+    </button>
+</div>

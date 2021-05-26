@@ -1,14 +1,18 @@
-<amplify-authenticator *ngIf="authState !== 'signedin'"></amplify-authenticator>
+<amplify-authenticator *ngIf="authState !== 'signedin'">
+  <amplify-sign-in slot="sign-in" hide-sign-up="true"></amplify-sign-in>
+</amplify-authenticator>
 
-<div fxLayout="column" class="container">
+<div *ngIf="authState === 'signedin' && user" fxLayout="column" class="container">
   <mat-toolbar color="primary" class="toolbar" fxLayout="row" fxLayoutAlign="space-between center" fxFlex="64px">
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
       <mat-icon>security</mat-icon>
       <span> Vault</span>
     </div>
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
-      <span style="font-size: 1rem;">{{ user?.username }}</span>
-      <amplify-sign-out></amplify-sign-out>
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon> {{ user?.username }}</button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <amplify-sign-out></amplify-sign-out>
+      </mat-menu>
     </div>
   </mat-toolbar>
   <div fxFlex class="application-container">
