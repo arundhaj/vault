@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AccountComponent } from '../account/account.component';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listAccounts } from 'src/graphql/queries';
-import { createAccount, updateAccount } from 'src/graphql/mutations';
+import { createAccount, deleteAccount, updateAccount } from 'src/graphql/mutations';
 
 @Component({
   selector: 'app-accounts',
@@ -32,7 +32,6 @@ export class AccountsComponent implements OnInit {
 
   async loadAccountsData() {
     const accountsResponse = await API.graphql(graphqlOperation(listAccounts));
-    // const accountsResponse = await API.graphql({query: listAccounts, authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS });
 
     this.accounts = (accountsResponse as any).data.listAccounts.items;
 
@@ -45,10 +44,6 @@ export class AccountsComponent implements OnInit {
   }
 
   showDialog(isAdd: boolean, account?: Account) {
-    // console.log('addProduct clicked');
-    // const addProductResponse = await API.graphql(graphqlOperation(createProduct, {input: this.testProduct}));
-    // console.log(addProductResponse);
-
     let accountData = {}
 
     if (!isAdd) {
@@ -80,13 +75,9 @@ export class AccountsComponent implements OnInit {
         }
 
         if (result.IsAdd) {
-            this.addAccountAsync(result.AccountData).then(() => {
-                this.loadAccountsData();
-            });
+            this.addAccountAsync(result.AccountData);
         } else {
-            this.editAccountAsync(result.AccountData).then(() => {
-                this.loadAccountsData();
-            });
+            this.editAccountAsync(result.AccountData);
         }
     });
   }  
@@ -94,8 +85,6 @@ export class AccountsComponent implements OnInit {
   async addAccountAsync(account: any) {
     const addAccountRequest = {
         service: account.service,
-        owner: account.owner,
-        // belongs_to: account.belongs_to,
         category: account.category,
         url: account.url,
         username: account.username,
@@ -103,22 +92,30 @@ export class AccountsComponent implements OnInit {
         // email: account.email,
         notes: account.notes
     };
-    const addAccountResponse = await API.graphql(graphqlOperation(createAccount, { input: addAccountRequest }));
+    await API.graphql(graphqlOperation(createAccount, { input: addAccountRequest }));
+    this.loadAccountsData();
   }
 
   async editAccountAsync(account: any) {
     const editAccountRequest = {
         id: account.id,
         service: account.service,
-        owner: account.owner,
-        // belongs_to: account.belongs_to,
         category: account.category,
         url: account.url,
         username: account.username,
         password: account.password,
-        // email: account.email,
         notes: account.notes
     };
-    const editAccountResponse = await API.graphql(graphqlOperation(updateAccount, { input: editAccountRequest }));
+    await API.graphql(graphqlOperation(updateAccount, { input: editAccountRequest }));
+    this.loadAccountsData();
   }
+
+  async deleteAccountAsync(account: any) {
+    const deleteAccountRequest = {
+        id: account.id,
+    };
+    await API.graphql(graphqlOperation(deleteAccount, { input: deleteAccountRequest }));
+    this.loadAccountsData();
+  }
+
 }
