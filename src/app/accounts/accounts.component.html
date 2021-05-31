@@ -1,118 +1,140 @@
-<div class="action-bar" fxLayout="row" fxLayoutAlign="space-between center">
-    <div>
-        <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput [(ngModel)]="searchQuery" name="searchQuery">
-            <button mat-button *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear" (click)="searchQuery=''">
-                <mat-icon>close</mat-icon>
-            </button>            
-        </mat-form-field>
+<div fxLayout="column" fxFill>
+    <div class="action-bar" fxLayout="row" fxLayoutAlign="space-between center" fxFlex="94px">
+        <div>
+            <mat-form-field appearance="outline" class="search-input">
+                <mat-label>Search</mat-label>
+                <input matInput [(ngModel)]="searchQuery" name="searchQuery">
+                <button mat-button *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="searchQuery=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px">
+            <button mat-stroked-button (click)="toggleCategories(false)" matTooltip="Expand All">
+                <mat-icon>unfold_more</mat-icon>
+            </button>
+            <button mat-stroked-button (click)="toggleCategories(true)" matTooltip="Collapse All">
+                <mat-icon>unfold_less</mat-icon>
+            </button>
+            <mat-button-toggle-group #group="matButtonToggleGroup" [value]="'grid'">
+                <mat-button-toggle value="grid" matTooltip="Grid View">
+                    <mat-icon>grid_view</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle value="list" matTooltip="List View">
+                    <mat-icon>view_list</mat-icon>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
     </div>
-    <div>
-        <mat-button-toggle-group #group="matButtonToggleGroup" [value]="'grid'">
-            <mat-button-toggle value="list">
-                <mat-icon>view_list</mat-icon>
-            </mat-button-toggle>
-            <mat-button-toggle value="grid">
-                <mat-icon>grid_view</mat-icon>
-            </mat-button-toggle>
-        </mat-button-toggle-group>
-    </div>
-</div>
-<div class="accounts-container">
-    <div *ngIf="group.value == 'grid'">
-        <div class="category-container" *ngFor="let category of categories">
-            <div class="category-header" fxLayout="row" fxLayoutAlign="start center" (click)="hideCategory[category] = !hideCategory[category]">
-                <mat-icon>{{ hideCategory[category] ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</mat-icon>
-                {{ category }}
-            </div>
-            <div *ngIf="hideCategory[category]" fxLayout="row wrap" fxLayoutGap="16px grid">
-                <div fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let account of getAccountsByCategory(category)">
-                    <div class="grid-item" fxLayout="column">
-                        <h3>{{ account.service }}</h3>
-                        <div fxLayout="row" fxLayoutGap="10px">
-                            <img src="https://logo.clearbit.com/{{ account.url }}" width="32" height="32" alt="">
-                            <div>
-                                <div class="account-url">{{ account.url }}</div>
-                                <div class="account-username">{{ account.username }}</div>
+    <div class="accounts-container" fxFlex fxLayout="column">
+        <div *ngIf="group.value == 'grid'" fxFill>
+            <div class="category-container" *ngFor="let category of categories">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div class="category-header" fxLayout="row" fxLayoutAlign="start center"
+                        (click)="hideCategory[category] = !hideCategory[category]">
+                        <mat-icon>{{ hideCategory[category] ? "keyboard_arrow_down" : "keyboard_arrow_upd" }}
+                        </mat-icon>
+                        <div class="category-header-title">{{ category }}</div>
+                    </div>
+                    <div></div>
+                </div>
+                <div *ngIf="!hideCategory[category]" fxLayout="row wrap" fxLayoutGap="16px grid">
+                    <div fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%"
+                        *ngFor="let account of getAccountsByCategory(category)">
+                        <div class="grid-item" fxLayout="column">
+                            <h3>{{ account.service }}</h3>
+                            <div fxLayout="row" fxLayoutGap="10px">
+                                <img src="https://logo.clearbit.com/{{ account.url }}" width="32" height="32" alt="">
+                                <div>
+                                    <div class="account-url">{{ account.url }}</div>
+                                    <div class="account-username">{{ account.username }}</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="account-action" fxLayout="row" fxLayoutAlign="end center">
-                            <a mat-icon-button [href]="account.url" target="_blank">
-                                <mat-icon>open_in_new</mat-icon>
-                            </a>
-                            <button mat-icon-button (click)="showDialog(false, account)">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button mat-icon-button [matMenuTriggerFor]="accountMenu">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-                            <mat-menu #accountMenu="matMenu">
-                                <button mat-menu-item [cdkCopyToClipboard]="account.username">
-                                    <mat-icon>text_format</mat-icon>
-                                    <span>Copy Username</span>
+                            <div class="account-action" fxLayout="row" fxLayoutAlign="end center">
+                                <a mat-icon-button [href]="account.url" target="_blank">
+                                    <mat-icon>open_in_new</mat-icon>
+                                </a>
+                                <button mat-icon-button (click)="showDialog(false, account)">
+                                    <mat-icon>edit</mat-icon>
                                 </button>
-                                <button mat-menu-item [cdkCopyToClipboard]="account.password">
-                                    <mat-icon>password</mat-icon>
-                                    <span>Copy Password</span>
+                                <button mat-icon-button [matMenuTriggerFor]="accountMenu">
+                                    <mat-icon>more_vert</mat-icon>
                                 </button>
-                                <button mat-menu-item>
-                                    <mat-icon>preview</mat-icon>
-                                    <span>Show Password</span>
-                                </button>
-                                <button mat-menu-item (click)="deleteAccountAsync(account)">
-                                    <mat-icon>delete</mat-icon>
-                                    <span>Delete</span>
-                                </button>
-                            </mat-menu>
+                                <mat-menu #accountMenu="matMenu">
+                                    <button mat-menu-item [cdkCopyToClipboard]="account.username">
+                                        <mat-icon>text_format</mat-icon>
+                                        <span>Copy Username</span>
+                                    </button>
+                                    <button mat-menu-item [cdkCopyToClipboard]="account.password">
+                                        <mat-icon>password</mat-icon>
+                                        <span>Copy Password</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                        <mat-icon>preview</mat-icon>
+                                        <span>Show Password</span>
+                                    </button>
+                                    <button mat-menu-item (click)="deleteAccountAsync(account)">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>Delete</span>
+                                    </button>
+                                </mat-menu>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div *ngIf="group.value == 'list'">
-        <div class="category-container" *ngFor="let category of categories">
-            <div class="category-header" fxLayout="row" fxLayoutAlign="start center" (click)="hideCategory[category] = !hideCategory[category]">
-                <mat-icon>{{ hideCategory[category] ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</mat-icon>
-                {{ category }}
+        <div *ngIf="group.value == 'list'" fxFill>
+            <div class="category-container" *ngFor="let category of categories">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div class="category-header" fxLayout="row" fxLayoutAlign="start center"
+                        (click)="hideCategory[category] = !hideCategory[category]">
+                        <mat-icon>{{ hideCategory[category] ? "keyboard_arrow_down" : "keyboard_arrow_up" }}
+                        </mat-icon>
+                        <div class="category-header-title">{{ category }}</div>
+                    </div>
+                    <div></div>
+                </div>
+                <mat-list *ngIf="!hideCategory[category]" role="list" class="list">
+                    <mat-list-item class="list-item" role="listitem"
+                        *ngFor="let account of getAccountsByCategory(category)">
+                        <h3 mat-line>{{ account.service }}</h3>
+                        <img mat-list-icon src="https://logo.clearbit.com/{{ account.url }}" width="64" height="64"
+                            alt="">
+                        <!-- <p mat-line><span><a href="{{ account.url }}"></a>{{ account.name }}</span></p> -->
+                        <div class="account-username" mat-line><span>{{ account.username }}</span></div>
+                        <div class="account-url" mat-line><span>{{ account.url }}</span></div>
+                        <a mat-icon-button [href]="account.url" target="_blank">
+                            <mat-icon>open_in_new</mat-icon>
+                        </a>
+                        <button mat-icon-button (click)="showDialog(false, account)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button [matMenuTriggerFor]="accountMenu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #accountMenu="matMenu">
+                            <button mat-menu-item [cdkCopyToClipboard]="account.username">
+                                <mat-icon>text_format</mat-icon>
+                                <span>Copy Username</span>
+                            </button>
+                            <button mat-menu-item [cdkCopyToClipboard]="account.password">
+                                <mat-icon>password</mat-icon>
+                                <span>Copy Password</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>preview</mat-icon>
+                                <span>Show Password</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </mat-list-item>
+                </mat-list>
             </div>
-            <mat-list *ngIf="hideCategory[category]" role="list">
-                <mat-list-item class="list-item" role="listitem" *ngFor="let account of getAccountsByCategory(category)">
-                    <h3 mat-line>{{ account.service }}</h3>
-                    <img mat-list-icon src="https://logo.clearbit.com/{{ account.url }}" width="64" height="64" alt="">
-                    <!-- <p mat-line><span><a href="{{ account.url }}"></a>{{ account.name }}</span></p> -->
-                    <div class="account-username" mat-line><span>{{ account.username }}</span></div>
-                    <div class="account-url" mat-line><span>{{ account.url }}</span></div>
-                    <a mat-icon-button [href]="account.url" target="_blank">
-                        <mat-icon>open_in_new</mat-icon>
-                    </a>
-                    <button mat-icon-button (click)="showDialog(false, account)">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button [matMenuTriggerFor]="accountMenu">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #accountMenu="matMenu">
-                        <button mat-menu-item [cdkCopyToClipboard]="account.username">
-                            <mat-icon>text_format</mat-icon>
-                            <span>Copy Username</span>
-                        </button>
-                        <button mat-menu-item [cdkCopyToClipboard]="account.password">
-                            <mat-icon>password</mat-icon>
-                            <span>Copy Password</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>preview</mat-icon>
-                            <span>Show Password</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>delete</mat-icon>
-                            <span>Delete</span>
-                        </button>
-                    </mat-menu>
-                </mat-list-item>
-            </mat-list>
         </div>
     </div>
 </div>

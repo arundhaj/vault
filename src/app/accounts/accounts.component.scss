@@ -1,19 +1,35 @@
 .action-bar {
-    padding: 1rem;
+    padding: 0.5rem;
+
+    .search-input {
+        ::ng-deep .mat-form-field-wrapper {
+            margin-bottom: -1.25em !important;
+        }
+    }
 }
 
 .accounts-container {
-    padding: 1rem; 
+    padding: 0.5rem;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: none;
+
 
     .grid-item {
-        border: 1px solid lightgray;
-        border-radius: 3px;
+        // border: 1px solid lightgray;
+        // border-radius: 3px;
         padding: 1rem;
         background-color: #fff;
     }
 
-    .list-item {
+    .list {
+        // border: 1px solid lightgray;
+        padding: 0;
         background-color: #fff;
+    }
+
+    .grid-item, .list-item {
+        border: 1px solid transparent;
     }
 
     .category-container:not(:first-child) {
@@ -21,7 +37,9 @@
     }
 
     .grid-item:hover, .mat-list-item:hover {
-        background-color: #e6edef;
+        border: 1px solid #bfd1d6;
+        // background-color: #e6edef;
+        // box-shadow: 0px 4px 4px -2px #6b95a0;
     }
 
     .mat-list-icon {
@@ -31,13 +49,17 @@
     }
 
     .category-header {
-        padding: 0.5rem 0;
+        padding: 0.25rem 0.5rem 0.25rem 0;
         margin-bottom: 0.25rem;
         cursor: pointer;
-    }
+        
+        .category-header-title {
+            font-size: 1.2rem;
+        }
 
-    .category-header:hover {
-        background-color: #bfd1d6;
+        &:hover {
+            background-color: #bfd1d6;
+        }
     }
 
 }
@@ -48,3 +70,4 @@
     bottom: 16px;
     z-index: 100;
 }
+

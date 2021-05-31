@@ -37,6 +37,11 @@ export class AccountsComponent implements OnInit {
 
     this.categories = [...new Set(this.accounts.map(account => account.category))];
     this.categories.sort((a,b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1);
+    this.hideCategory = this.categories.reduce((current, item) => { 
+      current[item] = false;
+      return current;
+    }, {});
+    let a = 0;
   }
 
   getAccountsByCategory(category: string) {
@@ -116,6 +121,12 @@ export class AccountsComponent implements OnInit {
     };
     await API.graphql(graphqlOperation(deleteAccount, { input: deleteAccountRequest }));
     this.loadAccountsData();
+  }
+
+  toggleCategories(state: boolean) {
+    Object.keys(this.hideCategory).forEach((category: any) => {
+      this.hideCategory[category] = state;
+    });
   }
 
 }

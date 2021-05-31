@@ -18,7 +18,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AccountsComponent } from './accounts/accounts.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 
@@ -26,6 +26,8 @@ import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 import Auth from '@aws-amplify/auth';
 import API from '@aws-amplify/api';
 import AWSConfig from 'src/aws-exports';
+
+import { AccountsComponent } from './accounts/accounts.component';
 import { AccountComponent } from './account/account.component';
 
 Auth.configure(AWSConfig);
@@ -43,6 +45,7 @@ API.configure(AWSConfig)
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatButtonModule,
     MatSelectModule,
     MatToolbarModule,
@@ -51,10 +54,10 @@ API.configure(AWSConfig)
     MatIconModule,
     MatDialogModule,
     MatMenuModule,
-    ClipboardModule,
     MatButtonToggleModule,
-    FormsModule,
     MatFormFieldModule,
+    MatTooltipModule,
+    ClipboardModule,
     FlexLayoutModule,
     AmplifyUIAngularModule,
   ],
