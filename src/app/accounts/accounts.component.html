@@ -39,7 +39,7 @@
                     </div>
                     <div></div>
                 </div>
-                <div *ngIf="!hideCategory[category]" fxLayout="row wrap" fxLayoutGap="16px grid">
+                <div *ngIf="!hideCategory[category]" fxLayout="row wrap">
                     <div fxFlex="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%"
                         *ngFor="let account of getAccountsByCategory(category)">
                         <div class="grid-item" fxLayout="column">
@@ -70,10 +70,10 @@
                                         <mat-icon>password</mat-icon>
                                         <span>Copy Password</span>
                                     </button>
-                                    <button mat-menu-item>
+                                    <!-- <button mat-menu-item>
                                         <mat-icon>preview</mat-icon>
                                         <span>Show Password</span>
-                                    </button>
+                                    </button> -->
                                     <button mat-menu-item (click)="deleteAccountAsync(account)">
                                         <mat-icon>delete</mat-icon>
                                         <span>Delete</span>
@@ -123,10 +123,10 @@
                                 <mat-icon>password</mat-icon>
                                 <span>Copy Password</span>
                             </button>
-                            <button mat-menu-item>
+                            <!-- <button mat-menu-item>
                                 <mat-icon>preview</mat-icon>
                                 <span>Show Password</span>
-                            </button>
+                            </button> -->
                             <button mat-menu-item>
                                 <mat-icon>delete</mat-icon>
                                 <span>Delete</span>
