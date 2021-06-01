@@ -29,7 +29,7 @@
     </div>
     <div class="accounts-container" fxFlex fxLayout="column">
         <div *ngIf="group.value == 'grid'" fxFill>
-            <div class="category-container" *ngFor="let category of categories">
+            <div class="category-container" *ngFor="let category of getCategories()">
                 <div fxLayout="row" fxLayoutAlign="start center">
                     <div class="category-header" fxLayout="row" fxLayoutAlign="start center"
                         (click)="hideCategory[category] = !hideCategory[category]">
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div *ngIf="group.value == 'list'" fxFill>
-            <div class="category-container" *ngFor="let category of categories">
+            <div class="category-container" *ngFor="let category of getCategories()">
                 <div fxLayout="row" fxLayoutAlign="start center">
                     <div class="category-header" fxLayout="row" fxLayoutAlign="start center"
                         (click)="hideCategory[category] = !hideCategory[category]">

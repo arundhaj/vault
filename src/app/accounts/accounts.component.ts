@@ -13,7 +13,6 @@ import { createAccount, deleteAccount, updateAccount } from 'src/graphql/mutatio
 export class AccountsComponent implements OnInit {
 
   accounts: any[] = [];
-  categories: any[] = [];
   searchQuery = '';
   hideCategory: any = {};
 
@@ -21,7 +20,6 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit(): void {
     this.accounts = [];
-    this.categories = [];
     this.loadInitialData().then(() => {
         this.loadAccountsData();
     });
@@ -34,18 +32,27 @@ export class AccountsComponent implements OnInit {
     const accountsResponse = await API.graphql(graphqlOperation(listAccounts));
 
     this.accounts = (accountsResponse as any).data.listAccounts.items;
+  }
 
-    this.categories = [...new Set(this.accounts.map(account => account.category))];
-    this.categories.sort((a,b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1);
-    this.hideCategory = this.categories.reduce((current, item) => { 
+  getCategories() {
+    const tempAccounts = this.getAccountsByFilter()
+    const categories = [...new Set(tempAccounts.map(account => account.category))];
+    categories.sort((a,b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1);
+    this.hideCategory = categories.reduce((current, item) => { 
       current[item] = false;
       return current;
     }, {});
-    let a = 0;
+    return categories;
+  }
+
+  getAccountsByFilter() {
+    return this.accounts
+      .filter(account => account.service.toLowerCase().includes(this.searchQuery.toLowerCase()));
   }
 
   getAccountsByCategory(category: string) {
-    return this.accounts.filter(account => account.category === category);
+    return this.getAccountsByFilter()
+      .filter(account => account.category === category);
   }
 
   showDialog(isAdd: boolean, account?: Account) {
