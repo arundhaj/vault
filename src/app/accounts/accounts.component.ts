@@ -20,6 +20,7 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit(): void {
     this.accounts = [];
+    this.hideCategory = {};
     this.loadInitialData().then(() => {
         this.loadAccountsData();
     });
@@ -37,11 +38,14 @@ export class AccountsComponent implements OnInit {
   getCategories() {
     const tempAccounts = this.getAccountsByFilter()
     const categories = [...new Set(tempAccounts.map(account => account.category))];
-    categories.sort((a,b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1);
-    this.hideCategory = categories.reduce((current, item) => { 
-      current[item] = false;
-      return current;
-    }, {});
+    categories.sort((a,b) => a === b ? 0 : a < b ? -1 : 1 );
+    // categories.forEach(item => item['state'] = false);
+    if(Object.keys(this.hideCategory).length == 0) {
+      this.hideCategory = categories.reduce((current, item) => { 
+        current[item] = false;
+        return current;
+      }, {});
+    }
     return categories;
   }
 
